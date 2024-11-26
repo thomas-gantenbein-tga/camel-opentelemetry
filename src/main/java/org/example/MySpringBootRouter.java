@@ -15,13 +15,12 @@ public class MySpringBootRouter extends RouteBuilder {
 
     @Override
     public void configure() {
-        from("netty:tcp://0.0.0.0:12345")
-        //from("timer:mytimer?period=10000")
+        from("netty-http:http://0.0.0.0:12345")
             .routeId("netty")
             .log("in netty route")
             .to("direct:anotherRoute");
 
-        from("timer:mytimer?period=5000&repeatCount=2")
+        from("timer:mytimer?period=5000&repeatCount=2&synchronous=true")
             .routeId("timer")
             .log("in timer route")
             .to("direct:anotherRoute");
@@ -29,10 +28,7 @@ public class MySpringBootRouter extends RouteBuilder {
         from("direct:anotherRoute")
             .log("in direct route")
             .delay(simple("${random(50, 5000)}"))
-            .log("another log in direct")
-            .process(e -> {
-                e.getIn().setHeader(NettyConstants.NETTY_CLOSE_CHANNEL_WHEN_COMPLETE, true);
-            });
+            .log("another log in direct");
     }
 
 }

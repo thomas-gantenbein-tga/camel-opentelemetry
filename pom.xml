@@ -113,7 +113,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.camel.springboot</groupId>
-      <artifactId>camel-netty-starter</artifactId>
+      <artifactId>camel-netty-http-starter</artifactId>
     </dependency>
     <dependency>
       <groupId>io.micrometer</groupId>
