@@ -182,7 +182,7 @@
             <!-- -Dotel.traces.exporter=zipkin -Dotel.metrics.exporter=prometheus-->
             -Dotel.traces.exporter=otlp -Dotel.metrics.exporter=prometheus
             -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
-
+            -Dio.opentelemetry.context.enableStrictContext=true
           </jvmArguments>
           <agents>
             <agent>${project.build.directory}/javaagents/javaagent.jar</agent>

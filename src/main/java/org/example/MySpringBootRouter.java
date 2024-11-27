@@ -18,23 +18,24 @@ public class MySpringBootRouter extends RouteBuilder {
         from("netty-http:http://0.0.0.0:12345")
             .routeId("netty")
             .log("in netty route")
-            .to("direct:anotherRoute")
+            .to("direct:aSlowerRoute")
             .to("direct:aFasterRoute");
 
         from("timer:mytimer?period=5000&repeatCount=2&synchronous=true")
             .routeId("timer")
             .log("in timer route")
-            .to("direct:anotherRoute");
+            .to("direct:aSlowerRoute")
+            .to("direct:aFasterRoute");
 
-        from("direct:anotherRoute")
-            .log("in direct route")
+        from("direct:aSlowerRoute")
+            .log("in aSlowerRoute")
             .delay(simple("${random(50, 350)}"))
-            .log("another log in direct");
+            .log("still in aSlowerRoute");
         
 	from("direct:aFasterRoute")
-            .log("in faster route")
+            .log("in aFasterRoute")
             .delay(simple("${random(10, 70)}"))
-            .log("another log in faster route");
+            .log("still in aFasterRoute");
     }
 
 }
